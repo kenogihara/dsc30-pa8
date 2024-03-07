@@ -1,15 +1,15 @@
 /*
- * Name: TODO
- * PID: TODO
+ * Name: Ken Ogihara
+ * PID: A16969236
  */
 
 import java.util.LinkedList;
 
 /**
- * TODO
+ * Hash Table Implementation.
  * 
- * @author TODO
- * @since TODO
+ * @author Ken Ogihara
+ * @since ${3/7/24}
  */
 
 public class MyHashTable implements KeyedSet {
