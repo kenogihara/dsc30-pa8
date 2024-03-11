@@ -17,19 +17,26 @@ public class MyHashTable implements KeyedSet {
     /* instance variables */
     private int size; // number of elements stored
     private LinkedList<String>[] table; // data table
+    public static final int DEFAULT_CAPACITY = 20;
+    public static final int MINIMUM_CAPACITY = 5;
 
     public MyHashTable() {
-        // TODO
+        this(DEFAULT_CAPACITY);
     }
 
     @SuppressWarnings("unchecked")
     public MyHashTable(int capacity) {
-        // TODO
+        if (capacity < MINIMUM_CAPACITY) {
+            throw new IllegalArgumentException("initial total capacity must be greater than 5");
+        }
+        table = new LinkedList[capacity];
+        size = 0;
     }
 
     public boolean insert(String value) {
-        // TODO
-        return false;
+        if (value == null) {
+            throw new NullPointerException("value is null");
+        }
     }
 
     public boolean delete(String value) {
