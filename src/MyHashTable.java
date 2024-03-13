@@ -41,19 +41,19 @@ public class MyHashTable implements KeyedSet {
             throw new NullPointerException("value is null");
         }
         if ((double) size / table.length > 1) {
-            getStatsLog();
+            //getStatsLog();
             rehash();
             rehashCount++;
         }
         int hashed = hashString(value);
+        if (table[hashed] == null) {
+            table[hashed] = new LinkedList<>();
+        }
         if (table[hashed].contains(value)) {
             return false;
         }
         if (!table[hashed].isEmpty()) {
             collisionCount++;
-        }
-        if (table[hashed] == null) {
-            table[hashed] = new LinkedList<>();
         }
         table[hashed].add(value);
         size++;
@@ -78,6 +78,9 @@ public class MyHashTable implements KeyedSet {
     public boolean lookup(String value) {
         if (value == null) {
             throw new NullPointerException("value is null");
+        }
+        if (table[hashString(value)] == null) {
+            return false;
         }
         return (table[hashString(value)]).contains(value);
     }
@@ -138,7 +141,11 @@ public class MyHashTable implements KeyedSet {
     @SuppressWarnings("unchecked")
     private void rehash() {
         LinkedList<String>[] newTable = new LinkedList[table.length * DOUBLE_SIZE];
-        System.arraycopy(table, STARTING_POS, newTable, STARTING_POS, size);
+        for (LinkedList<String> bucket : table) {
+            for (String string : bucket) {
+                insert(string);
+            }
+        }
         table = newTable;
         collisionCount = 0;
     }
@@ -150,6 +157,6 @@ public class MyHashTable implements KeyedSet {
             int rightShiftedValue = hashValue >>> 27;
             hashValue = (leftShiftedValue | rightShiftedValue) ^ value.charAt(i);
         }
-        return hashValue % table.length;
+        return Math.abs(hashValue % table.length);
     }
 }
