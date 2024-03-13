@@ -19,6 +19,8 @@ public class MyHashTable implements KeyedSet {
     private LinkedList<String>[] table; // data table
     public static final int DEFAULT_CAPACITY = 20;
     public static final int MINIMUM_CAPACITY = 5;
+    public static final int DOUBLE_SIZE = 2;
+    public static final int STARTING_POS = 0;
 
     public MyHashTable() {
         this(DEFAULT_CAPACITY);
@@ -30,38 +32,73 @@ public class MyHashTable implements KeyedSet {
             throw new IllegalArgumentException("initial total capacity must be greater than 5");
         }
         table = new LinkedList[capacity];
-        size = 0;
     }
 
     public boolean insert(String value) {
         if (value == null) {
             throw new NullPointerException("value is null");
         }
+        if ((double) size / table.length > 1) {
+            rehash();
+        }
+        int hashed = hashString(value);
+        if (table[hashed].contains(value)) {
+            return false;
+        }
+        if (table[hashed] == null) {
+            table[hashed] = new LinkedList<>();
+        }
+        table[hashed].add(value);
+        size++;
+        return true;
     }
 
     public boolean delete(String value) {
-        // TODO
-        return false;
+        if (value == null) {
+            throw new NullPointerException("value is null");
+        }
+        int hashed = hashString(value);
+        if (table[hashed] == null) {
+            return false;
+        }
+        if (table[hashed].contains(value)) {
+            table[hashed].remove(value);
+            size--;
+        }
+        return true;
     }
 
     public boolean lookup(String value) {
-        // TODO
-        return false;
+        if (value == null) {
+            throw new NullPointerException("value is null");
+        }
+        return (table[hashString(value)]).contains(value);
     }
 
     public String[] returnAll() {
-        // TODO
-        return null;
+        int index = 0;
+        String[] output = new String[size()];
+        for (LinkedList<String> bucket : table) {
+            if (bucket == null) {
+                continue;
+            }
+            for (String string : bucket) {
+                if (string == null) {
+                    continue;
+                }
+                output[index] = string;
+                index++;
+            }
+        }
+        return output;
     }
 
     public int size() {
-        // TODO
-        return -1;
+        return size;
     }
 
     public int capacity() {
-        // TODO
-        return -1;
+        return table.length;
     }
 
     public String getStatsLog() {
@@ -91,11 +128,18 @@ public class MyHashTable implements KeyedSet {
 
     @SuppressWarnings("unchecked")
     private void rehash() {
-        // TODO
+        LinkedList<String>[] newTable = new LinkedList[table.length * DOUBLE_SIZE];
+        System.arraycopy(table, STARTING_POS, newTable, STARTING_POS, size);
+        table = newTable;
     }
 
     private int hashString(String value) {
-        // TODO
-        return -1;
+        int hashValue = 0;
+        for (int i = 0; i < value.length(); i++) {
+            int leftShiftedValue = hashValue << 5;
+            int rightShiftedValue = hashValue >>> 27;
+            hashValue = (leftShiftedValue | rightShiftedValue) ^ value.charAt(i);
+        }
+        return hashValue % table.length;
     }
 }
