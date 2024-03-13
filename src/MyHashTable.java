@@ -17,6 +17,8 @@ public class MyHashTable implements KeyedSet {
     /* instance variables */
     private int size; // number of elements stored
     private LinkedList<String>[] table; // data table
+    private int rehashCount;
+    private int collisionCount;
     public static final int DEFAULT_CAPACITY = 20;
     public static final int MINIMUM_CAPACITY = 5;
     public static final int DOUBLE_SIZE = 2;
@@ -39,11 +41,16 @@ public class MyHashTable implements KeyedSet {
             throw new NullPointerException("value is null");
         }
         if ((double) size / table.length > 1) {
+            getStatsLog();
             rehash();
+            rehashCount++;
         }
         int hashed = hashString(value);
         if (table[hashed].contains(value)) {
             return false;
+        }
+        if (!table[hashed].isEmpty()) {
+            collisionCount++;
         }
         if (table[hashed] == null) {
             table[hashed] = new LinkedList<>();
@@ -102,8 +109,10 @@ public class MyHashTable implements KeyedSet {
     }
 
     public String getStatsLog() {
-        // TODO
-        return null;
+        double loadFactor = (double) size / table.length;
+        String statsLog = String.format("Before rehash # %d: load factor %.2f, %s collision(s).\n",
+                rehashCount, loadFactor, collisionCount);
+        return statsLog;
     }
 
     /**
@@ -131,6 +140,7 @@ public class MyHashTable implements KeyedSet {
         LinkedList<String>[] newTable = new LinkedList[table.length * DOUBLE_SIZE];
         System.arraycopy(table, STARTING_POS, newTable, STARTING_POS, size);
         table = newTable;
+        collisionCount = 0;
     }
 
     private int hashString(String value) {
