@@ -43,7 +43,7 @@ class MyHashTableTester {
         employees.insert("leo");
         System.out.println(employees.size());
         System.out.println(employees.capacity());
-
+        employees.printTable();
     }
 
     @org.junit.jupiter.api.Test

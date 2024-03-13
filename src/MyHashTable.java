@@ -41,7 +41,7 @@ public class MyHashTable implements KeyedSet {
             throw new NullPointerException("value is null");
         }
         if ((double) size / table.length > 1) {
-            //getStatsLog();
+            getStatsLog();
             rehash();
             rehashCount++;
         }
