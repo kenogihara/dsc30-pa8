@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MyHashTableTester {
@@ -43,7 +42,7 @@ class MyHashTableTester {
         employees.insert("leo");
         System.out.println(employees.size());
         System.out.println(employees.capacity());
-        employees.printTable();
+        System.out.println(employees.getStatsLog());
     }
 
     @org.junit.jupiter.api.Test

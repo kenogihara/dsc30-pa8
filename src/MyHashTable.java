@@ -40,8 +40,8 @@ public class MyHashTable implements KeyedSet {
         if (value == null) {
             throw new NullPointerException("value is null");
         }
-        if ((double) size / table.length > 1) {
-            getStatsLog();
+        if ((double) size() / table.length > 1) {
+            //getStatsLog();
             rehash();
             rehashCount++;
         }
@@ -140,13 +140,16 @@ public class MyHashTable implements KeyedSet {
 
     @SuppressWarnings("unchecked")
     private void rehash() {
+//        LinkedList<String>[] newTable = table;
+//        table = new LinkedList[table.length * DOUBLE_SIZE];
+//        for (LinkedList<String> bucket : newTable) {
+//            for (String string : bucket) {
+//                this.insert(string);
+//
+//            }
+//        }
         LinkedList<String>[] newTable = new LinkedList[table.length * DOUBLE_SIZE];
-        for (LinkedList<String> bucket : table) {
-            for (String string : bucket) {
-                insert(string);
-            }
-        }
-        table = newTable;
+        System.arraycopy(table, STARTING_POS, newTable, STARTING_POS, size());
         collisionCount = 0;
     }
 
