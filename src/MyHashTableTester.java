@@ -48,14 +48,8 @@ class MyHashTableTester {
         assertEquals(11, employees.size());
         assertEquals(1, employees.size() / employees.capacity());
         assertTrue(employees.insert("harshil")); //12th element; should be rehashed
-
-
-
-
-
-        System.out.println(employees.toString());
-        System.out.println(employees.size());
-//        System.out.println(employees.capacity());
+        System.out.println(employees.size()); // this should be 12
+        System.out.println(employees.capacity()); // this should be 20
         //System.out.println(employees.getStatsLog());
     }
 

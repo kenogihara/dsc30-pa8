@@ -50,6 +50,7 @@ public class MyHashTable implements KeyedSet {
         }
         double loadFactor = (double) size / table.length;
         if (loadFactor > 1) {
+            size = 0;
             rehash();
         }
         if (table[hashed] == null) {
@@ -145,7 +146,7 @@ public class MyHashTable implements KeyedSet {
                 rehashCount, loadFactor, collisionCount);
 
         LinkedList<String>[] newTable = table;
-        table = new LinkedList[table.length * DOUBLE_SIZE];
+        table = new LinkedList[capacity() * DOUBLE_SIZE];
         Arrays.setAll(table, i -> new LinkedList<String>());
         for (LinkedList<String> bucket : newTable) {
             for (String string : bucket) {
