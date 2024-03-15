@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MyHashTableTester {
@@ -28,6 +31,8 @@ class MyHashTableTester {
         assertEquals(10, objectTwo.capacity());
         objectTwo.insert("random");
         assertEquals(1, objectTwo.size());
+        objectTwo.insert("another random string");
+        assertEquals(2, objectTwo.size());
     }
     @org.junit.jupiter.api.Test
     void insert() {
@@ -37,12 +42,21 @@ class MyHashTableTester {
         assertEquals(9, employees.size());
         assertEquals(1, employees.capacity() - employees.size());
         assertThrows(NullPointerException.class, () -> employees.insert(null));
-        assertTrue(employees.insert("makoto"));
+        assertTrue(employees.insert("makoto")); //this is the 10th element we're inserting
         assertFalse(employees.insert("andrew"));
-        employees.insert("leo");
+        assertTrue(employees.insert("leo")); //11th element; load factor should be 1.1
+        assertEquals(11, employees.size());
+        assertEquals(1, employees.size() / employees.capacity());
+        assertTrue(employees.insert("harshil")); //12th element; should be rehashed
+
+
+
+
+
+        System.out.println(employees.toString());
         System.out.println(employees.size());
-        System.out.println(employees.capacity());
-        System.out.println(employees.getStatsLog());
+//        System.out.println(employees.capacity());
+        //System.out.println(employees.getStatsLog());
     }
 
     @org.junit.jupiter.api.Test

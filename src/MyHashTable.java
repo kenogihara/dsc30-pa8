@@ -3,6 +3,7 @@
  * PID: A16969236
  */
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -19,13 +20,15 @@ public class MyHashTable implements KeyedSet {
     private LinkedList<String>[] table; // data table
     private int rehashCount;
     private int collisionCount;
+    private String statsLog = "";
     public static final int DEFAULT_CAPACITY = 20;
     public static final int MINIMUM_CAPACITY = 5;
     public static final int DOUBLE_SIZE = 2;
-    public static final int STARTING_POS = 0;
+    //public static final int STARTING_POS = 0;
 
     public MyHashTable() {
         this(DEFAULT_CAPACITY);
+        Arrays.setAll(table, i -> new LinkedList<String>());
     }
 
     @SuppressWarnings("unchecked")
@@ -34,23 +37,23 @@ public class MyHashTable implements KeyedSet {
             throw new IllegalArgumentException("initial total capacity must be greater than 5");
         }
         table = new LinkedList[capacity];
+        Arrays.setAll(table, i -> new LinkedList<String>());
     }
 
     public boolean insert(String value) {
         if (value == null) {
             throw new NullPointerException("value is null");
         }
-        if ((double) size() / table.length > 1) {
-            //getStatsLog();
-            rehash();
-            rehashCount++;
-        }
         int hashed = hashString(value);
-        if (table[hashed] == null) {
-            table[hashed] = new LinkedList<>();
-        }
         if (table[hashed].contains(value)) {
             return false;
+        }
+        double loadFactor = (double) size / table.length;
+        if (loadFactor > 1) {
+            rehash();
+        }
+        if (table[hashed] == null) {
+            table[hashed] = new LinkedList<>();
         }
         if (!table[hashed].isEmpty()) {
             collisionCount++;
@@ -112,9 +115,6 @@ public class MyHashTable implements KeyedSet {
     }
 
     public String getStatsLog() {
-        double loadFactor = (double) size / table.length;
-        String statsLog = String.format("Before rehash # %d: load factor %.2f, %s collision(s).\n",
-                rehashCount, loadFactor, collisionCount);
         return statsLog;
     }
 
@@ -140,17 +140,24 @@ public class MyHashTable implements KeyedSet {
 
     @SuppressWarnings("unchecked")
     private void rehash() {
+        double loadFactor = (double) size / table.length;
+        statsLog += String.format("Before rehash # %d: load factor %.2f, %s collision(s).\n",
+                rehashCount, loadFactor, collisionCount);
+
+        LinkedList<String>[] newTable = table;
+        table = new LinkedList[table.length * DOUBLE_SIZE];
+        Arrays.setAll(table, i -> new LinkedList<String>());
+        for (LinkedList<String> bucket : newTable) {
+            for (String string : bucket) {
+                this.insert(string);
+            }
+        }
 //        LinkedList<String>[] newTable = table;
 //        table = new LinkedList[table.length * DOUBLE_SIZE];
-//        for (LinkedList<String> bucket : newTable) {
-//            for (String string : bucket) {
-//                this.insert(string);
-//
-//            }
-//        }
-        LinkedList<String>[] newTable = new LinkedList[table.length * DOUBLE_SIZE];
-        System.arraycopy(table, STARTING_POS, newTable, STARTING_POS, size());
+//        Arrays.setAll(table, i -> new LinkedList<String>());
+//        System.arraycopy(table, STARTING_POS, newTable, STARTING_POS, size);
         collisionCount = 0;
+        rehashCount++;
     }
 
     private int hashString(String value) {
