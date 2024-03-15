@@ -12,7 +12,7 @@ public class CollisionHandling {
         /*
         TODO: create the values for the hashtable representations
          */
-        int[][] output = {{0, 24, 5, 42, 0, 28, 84, 98}, {11, 24, 5, 42, 77, 28, 84, 98}}; //change
+        int[][] output = {{0, 24, 5, 42, 0, 28, 0, 0}, {11, 24, 5, 42, 77, 28, 84, 98}}; //change
         return output;
     }
 

@@ -95,13 +95,33 @@ public class SpellChecker {
     private LinkedList<String> checkInsertSpace(String word) {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
-
+            String suggestionBeforeSpace = word.substring(0);
+            String suggestionAfterSpace = " " + word.substring(i);
+            if (dictWords.lookup(suggestionBeforeSpace) && dictWords.lookup(suggestionAfterSpace)) {
+                suggestions.add(suggestionBeforeSpace + suggestionAfterSpace);
+            }
         }
+        return suggestions;
     }
 
     private String[] checkWord(String word) {
-        // TODO
-        return null;
+        LinkedList<String> allSuggestions = new LinkedList<>();
+        String output = "";
+        allSuggestions.addAll(checkWrongLetter(word));
+        allSuggestions.addAll(checkInsertedLetter(word));
+        allSuggestions.addAll(checkInsertSpace(word));
+        allSuggestions.addAll(checkTransposedLetter(word));
+        allSuggestions.addAll(checkDeleted(word));
+
+        if (allSuggestions.isEmpty()) {
+            return new String[]{output + "not found"};
+        }
+        if (dictWords.lookup(word)) {
+            return new String[]{"ok"};
+        }
+        else {
+            return allSuggestions.toArray(new String[0]);
+        }
     }
 
     public static void main(String[] args) {
@@ -115,8 +135,7 @@ public class SpellChecker {
         try {
             Reader reader = new FileReader(dictionary);
 
-            //TODO - call readDictionary with the given reader on the correct data structure.
-
+            checker.readDictionary(reader, Integer.parseInt(args[0]) == 0);
 
         } catch (FileNotFoundException e) {
             System.err.println("Failed to open " + dictionary);
@@ -127,7 +146,9 @@ public class SpellChecker {
         try {
             Scanner input = new Scanner(inputFile); // Reads list of words
 
-            //TODO - go through each word from Scanner
+            while (input.hasNextLine()) {
+                
+            }
 
         } catch (FileNotFoundException e) {
             System.err.println("Failed to open " + inputFile);
