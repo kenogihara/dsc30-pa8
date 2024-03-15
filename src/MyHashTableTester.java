@@ -134,11 +134,17 @@ class MyHashTableTester {
 
     @org.junit.jupiter.api.Test
     void getStatsLog() {
-        System.out.println();
+        for (String country : areas) {
+            countries.insert(country);
+        }
+        countries.insert("canada");
+        countries.insert("germany");
+        System.out.println(employees.getStatsLog());
+
     }
 
     @org.junit.jupiter.api.Test
     void printTable() {
-//        String.valueOf(employees.printTable());
+        employees.printTable();
     }
 }

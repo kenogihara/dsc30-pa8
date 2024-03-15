@@ -20,7 +20,7 @@ public class MyHashTable implements KeyedSet {
     private LinkedList<String>[] table; // data table
     private int rehashCount;
     private int collisionCount;
-    private String statsLog = "";
+    String statsLog = "";
     public static final int DEFAULT_CAPACITY = 20;
     public static final int MINIMUM_CAPACITY = 5;
     public static final int DOUBLE_SIZE = 2;
@@ -121,6 +121,7 @@ public class MyHashTable implements KeyedSet {
         return statsLog;
     }
 
+
     /**
      * Utility function provided to help with debugging
      */
@@ -147,6 +148,7 @@ public class MyHashTable implements KeyedSet {
         statsLog += String.format("Before rehash # %d: load factor %.2f, %s collision(s).\n",
                 rehashCount, loadFactor, collisionCount);
 
+        System.out.println(statsLog);
         LinkedList<String>[] newTable = table;
         table = new LinkedList[capacity() * DOUBLE_SIZE];
         Arrays.setAll(table, i -> new LinkedList<String>());
