@@ -36,14 +36,19 @@ public class MyBloomFilter implements KeyedSet {
         if (key == null) {
             throw new NullPointerException("value is null");
         }
-        int hashedA = hashFuncA(key);
-        int hashedB = hashFuncB(key);
-        int hashedC = hashFuncC(key);
+        if (bits[hashFuncA(key)] && bits[hashFuncB(key)] && bits[hashFuncC(key)]) {
+            return true;
+        }
+        else {
+            int hashedA = hashFuncA(key);
+            int hashedB = hashFuncB(key);
+            int hashedC = hashFuncC(key);
 
-        bits[hashedA] = true;
-        bits[hashedB] = true;
-        bits[hashedC] = true;
-        return true;
+            bits[hashedA] = true;
+            bits[hashedB] = true;
+            bits[hashedC] = true;
+            return true;
+        }
     }
 
     /**
