@@ -72,6 +72,9 @@ public class MyHashTable implements KeyedSet {
         if (table[hashed] == null) {
             return false;
         }
+        if (!table[hashed].contains(value)) {
+            return false;
+        }
         if (table[hashed].contains(value)) {
             table[hashed].remove(value);
             size--;

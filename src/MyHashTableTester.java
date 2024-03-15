@@ -50,11 +50,22 @@ class MyHashTableTester {
         assertTrue(employees.insert("harshil")); //12th element; should be rehashed
         System.out.println(employees.size()); // this should be 12
         System.out.println(employees.capacity()); // this should be 20
-        //System.out.println(employees.getStatsLog());
     }
 
     @org.junit.jupiter.api.Test
     void delete() {
+        for (String country : areas) {
+            countries.insert(country);
+        }
+        assertThrows(NullPointerException.class, () -> countries.delete(null));
+        assertTrue(countries.delete("korea")); // so there should be 9 elements after this
+        assertFalse(countries.delete("russia"));
+
+//        assertEquals(9, countries.capacity() - countries.size());
+//        countries.insert("france");
+//        countries.insert("germany");
+//        assertEquals(11, countries.size());
+//        assertEquals(20, countries.capacity());
     }
 
     @org.junit.jupiter.api.Test
