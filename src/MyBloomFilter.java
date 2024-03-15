@@ -1,18 +1,19 @@
 /*
- * Name: TODO
- * PID: TODO
+ * Name: Ken Ogihara
+ * PID: A16969236
  */
 
 /**
- * TODO
+ * MyBloomFilter implementation.
  *
- * @author TODO
- * @since TODO
+ * @author Ken Ogihara
+ * @since ${3/15/24}
  */
 
 public class MyBloomFilter implements KeyedSet {
 
     private static final int DEFAULT_M = (int) 1e7;
+    private static final int CONVERTER = 27;
 
     boolean[] bits;
 
@@ -32,8 +33,17 @@ public class MyBloomFilter implements KeyedSet {
      *         present
      */
     public boolean insert(String key) {
-        // TODO
-        return false;
+        if (key == null) {
+            throw new NullPointerException("value is null");
+        }
+        int hashedA = hashFuncA(key);
+        int hashedB = hashFuncB(key);
+        int hashedC = hashFuncC(key);
+
+        bits[hashedA] = true;
+        bits[hashedB] = true;
+        bits[hashedC] = true;
+        return true;
     }
 
     /**
@@ -43,8 +53,14 @@ public class MyBloomFilter implements KeyedSet {
      * @return true if the key was found, false if the key was not found
      */
     public boolean lookup(String key) {
-        // TODO
-        return false;
+        if (key == null) {
+            throw new NullPointerException("value is null");
+        }
+        int hashedA = hashFuncA(key);
+        int hashedB = hashFuncB(key);
+        int hashedC = hashFuncC(key);
+
+        return bits[hashedA] && bits[hashedB] && bits[hashedC];
     }
 
     /**
@@ -53,9 +69,13 @@ public class MyBloomFilter implements KeyedSet {
      * @return A hashcode for the string
      */
     private int hashFuncA(String value) {
-        // TODO
-        // feel free to copy paste from MyHashTable.java
-        return -1;
+        int hashValue = 0;
+        for (int i = 0; i < value.length(); i++) {
+            int leftShiftedValue = hashValue << 5;
+            int rightShiftedValue = hashValue >>> 27;
+            hashValue = (leftShiftedValue | rightShiftedValue) ^ value.charAt(i);
+        }
+        return Math.abs(hashValue % bits.length);
     }
 
     /**
@@ -64,8 +84,12 @@ public class MyBloomFilter implements KeyedSet {
      * @return A hashcode for the string
      */
     private int hashFuncB(String value) {
-        // TODO
-        return -1;
+        int hashVal = 0;
+        for (int j = 0; j < value.length(); j++) {
+            int letter = value.charAt(j);
+            hashVal = (hashVal * CONVERTER + letter) % bits.length;
+        }
+        return hashVal;
     }
 
     /**

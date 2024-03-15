@@ -1,6 +1,6 @@
 /*
- * Name: TODO
- * PID: TODO
+ * Name: Ken Ogihara
+ * PID: A16969236
  */
 
 import java.io.*;
@@ -8,10 +8,10 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
- * TODO
+ * Spell Checker Implementation.
  *
- * @author TODO
- * @since TODO
+ * @author Ken Ogihara
+ * @since ${3/15/24}
  */
 
 public class SpellChecker {
