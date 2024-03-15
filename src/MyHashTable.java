@@ -203,7 +203,7 @@ public class MyHashTable implements KeyedSet {
     private void rehash() {
         double loadFactor = (double) size / table.length;
         statsLog += String.format("Before rehash # %d: load factor %.2f, %s collision(s).\n",
-                rehashCount, loadFactor, collisionCount);
+                rehashCount + 1, loadFactor, collisionCount);
 
         System.out.println(statsLog);
         LinkedList<String>[] newTable = table;
