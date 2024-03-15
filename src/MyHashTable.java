@@ -21,16 +21,27 @@ public class MyHashTable implements KeyedSet {
     private int rehashCount;
     private int collisionCount;
     String statsLog = "";
+
+    /* magic numbers */
     public static final int DEFAULT_CAPACITY = 20;
     public static final int MINIMUM_CAPACITY = 5;
     public static final int DOUBLE_SIZE = 2;
     //public static final int STARTING_POS = 0;
 
+    /**
+     * Initializes a hash table with capacity = 20.
+     */
     public MyHashTable() {
         this(DEFAULT_CAPACITY);
         Arrays.setAll(table, i -> new LinkedList<String>());
     }
 
+    /**
+     * Initializes a hash table with a give capacity.
+     *
+     * @param capacity The initial capacity of the hash table.
+     * @throws IllegalArgumentException if initial capacity is less than 5.
+     */
     @SuppressWarnings("unchecked")
     public MyHashTable(int capacity) {
         if (capacity < MINIMUM_CAPACITY) {
@@ -40,6 +51,13 @@ public class MyHashTable implements KeyedSet {
         Arrays.setAll(table, i -> new LinkedList<String>());
     }
 
+    /**
+     * Method that adds an item to the hash table.
+     *
+     * @param value String item.
+     * @return whether or not the String value was inserted.
+     * @throws NullPointerException if value is null.
+     */
     public boolean insert(String value) {
         if (value == null) {
             throw new NullPointerException("value is null");
@@ -63,6 +81,13 @@ public class MyHashTable implements KeyedSet {
         return true;
     }
 
+    /**
+     * Method that removes the given value from the hash table.
+     *
+     * @param value String item.
+     * @return whether or not the String value was deleted.
+     * @throws NullPointerException if the value is null.
+     */
     public boolean delete(String value) {
         if (value == null) {
             throw new NullPointerException("value is null");
@@ -81,6 +106,13 @@ public class MyHashTable implements KeyedSet {
         return true;
     }
 
+    /**
+     * Method that checks is a particular value is in the hash table.
+     *
+     * @param value String item to be checked.
+     * @return whether or not the value is in the hash table.
+     * @throws NullPointerException if the value is null.
+     */
     public boolean lookup(String value) {
         if (value == null) {
             throw new NullPointerException("value is null");
@@ -91,6 +123,12 @@ public class MyHashTable implements KeyedSet {
         return (table[hashString(value)]).contains(value);
     }
 
+    /**
+     * Method that outputs an array of strings in the order in which they are located in the
+     * hash table.
+     *
+     * @return an array of Strings.
+     */
     public String[] returnAll() {
         int index = 0;
         String[] output = new String[size()];
@@ -109,14 +147,29 @@ public class MyHashTable implements KeyedSet {
         return output;
     }
 
+    /**
+     * Method that returns the number of elements in the hash table.
+     *
+     * @return an integer.
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Method that returns the length of the hash table.
+     *
+     * @return an integer.
+     */
     public int capacity() {
         return table.length;
     }
 
+    /**
+     * Method that returns statistics regarding the rehash count, load factor, and collision count.
+     *
+     * @return a String.
+     */
     public String getStatsLog() {
         return statsLog;
     }
@@ -142,6 +195,10 @@ public class MyHashTable implements KeyedSet {
         System.out.println(s);
     }
 
+    /**
+     * Method that doubles the size of the capacity of the hash table once the load factor
+     * exceeds 1.
+     */
     @SuppressWarnings("unchecked")
     private void rehash() {
         double loadFactor = (double) size / table.length;
@@ -165,6 +222,13 @@ public class MyHashTable implements KeyedSet {
         rehashCount++;
     }
 
+    /**
+     * Hash function method (Cyclical Redundancy Check) that computes the hash value of the
+     * given string value.
+     *
+     * @param value a String item.
+     * @return the index location of the value.
+     */
     private int hashString(String value) {
         int hashValue = 0;
         for (int i = 0; i < value.length(); i++) {
