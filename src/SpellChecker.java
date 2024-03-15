@@ -50,8 +50,12 @@ public class SpellChecker {
     }
 
     private LinkedList<String> checkInsertedLetter(String word) {
-        // TODO
-        return null;
+        LinkedList<String> suggestions = new LinkedList<>();
+        for (int i = 0; i < word.length(); i++) {
+            for (char character = 'a'; character <= 'z'; character++) {
+
+            }
+        }
     }
 
     private LinkedList<String> checkDeleted(String word) {
