@@ -19,12 +19,34 @@ public class SpellChecker {
     public KeyedSet dictWords;
 
     public void readDictionary(Reader reader, boolean useHashTable) {
-        // TODO
+        Scanner fetch = new Scanner(reader);
+        if (useHashTable) {
+            dictWords = new MyHashTable();
+        }
+        else {
+            dictWords = new MyBloomFilter();
+        }
+        while (fetch.hasNextLine()) {
+            dictWords.insert(fetch.nextLine());
+        }
+        fetch.close();
     }
 
     private LinkedList<String> checkWrongLetter(String word) {
-        // TODO
-        return null;
+        LinkedList<String> suggestions = new LinkedList<>();
+        for (int i = 0; i < word.length(); i++) {
+            for (char character = 'a'; character <= 'z'; character++) {
+                if (word.charAt(i) == character) {
+                    continue;
+                }
+                String suggestion = word.substring(0, i) + character +
+                        word.substring(i + 1);
+                if (dictWords.lookup(suggestion)) {
+                    suggestions.add(suggestion);
+                }
+            }
+        }
+        return suggestions;
     }
 
     private LinkedList<String> checkInsertedLetter(String word) {
