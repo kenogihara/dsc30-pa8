@@ -150,7 +150,6 @@ public class SpellChecker {
             while (input.hasNextLine()) {
                 String lowerCase = input.nextLine().toLowerCase();
                 String checked = Arrays.toString(checker.checkWord(lowerCase));
-                System.out.println(lowerCase + ": " + checked.substring(1, checked.length() - 1));
             }
 
         } catch (FileNotFoundException e) {
