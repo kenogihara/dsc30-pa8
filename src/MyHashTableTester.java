@@ -1,12 +1,12 @@
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MyHashTableTester {
     MyHashTable employees;
     MyHashTable countries;
     MyHashTable test;
+    MyHashTable ASCIIValues;
     String[] names = {"aria", "ken", "ricky", "andrew", "arthur", "annie", "dom", "noah", "nacho"};
     String[] areas = {"america", "new zealand", "china", "switzerland", "ireland", "greenland",
             "japan", "zimbabwe", "nigeria", "korea"};
@@ -15,6 +15,7 @@ class MyHashTableTester {
         employees = new MyHashTable(10);
         countries = new MyHashTable(10);
         test = new MyHashTable();
+        ASCIIValues = new MyHashTable(5);
     }
     @Test
     void constructorOne() {
@@ -138,16 +139,24 @@ class MyHashTableTester {
         }
         countries.insert("canada");
         countries.insert("germany");
-        System.out.println(countries.getStatsLog());
+        assertEquals("Before rehash # 1: load factor 1.10, 4 collision(s).\n",
+                countries.getStatsLog());
 
-    }
-
-    @org.junit.jupiter.api.Test
-    void printTable() {
-        for (String country : areas) {
+        String[] moreCountries = {"Brazil", "Spain", "Cuba", "Israel", "South Korea", "Iran",
+                "Saudi Arabia", "India", "Belgium", "Jamaica"};
+        for (String country : moreCountries) {
             countries.insert(country);
         }
+        assertEquals("Before rehash # 1: load factor 1.10, 4 collision(s).\n" +
+                        "Before rehash # 2: load factor 1.05, 4 collision(s).\n",
+                countries.getStatsLog());
 
-        countries.printTable();
+        int i = 0;
+        while (i < 7) {
+            ASCIIValues.insert(String.valueOf(i));
+            i++;
+        }
+        assertEquals("Before rehash # 1: load factor 1.20, 1 collision(s).\n",
+                ASCIIValues.getStatsLog());
     }
 }
