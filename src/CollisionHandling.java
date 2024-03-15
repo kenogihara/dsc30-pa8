@@ -25,7 +25,7 @@ public class CollisionHandling {
         /*
         TODO: create the values for the hashtable representations
          */
-        int[][] output = {{0, 16, 0, 26, 11, 0, 101, 0}, {0, 16, 33, 26, 11, 0, 101, 0, 0, 9, 0, 2, 0, 201, 0, 0}}; //change
+        int[][] output = {{101, 0, 0, 16, 0, 26, 11, 0}, {101, 2, 0, 16, 33, 26, 11, 0, 9, 0, 0, 0, 0, 201, 0, 0}}; //change
         return output;
     }
 
