@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MyHashTableTester {
@@ -139,12 +138,16 @@ class MyHashTableTester {
         }
         countries.insert("canada");
         countries.insert("germany");
-        System.out.println(employees.getStatsLog());
+        System.out.println(countries.getStatsLog());
 
     }
 
     @org.junit.jupiter.api.Test
     void printTable() {
-        employees.printTable();
+        for (String country : areas) {
+            countries.insert(country);
+        }
+
+        countries.printTable();
     }
 }

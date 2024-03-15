@@ -20,6 +20,7 @@ public class MyHashTable implements KeyedSet {
     private LinkedList<String>[] table; // data table
     private int rehashCount;
     private int collisionCount;
+    private double loadFactor;
     String statsLog = "";
 
     /* magic numbers */
@@ -66,7 +67,8 @@ public class MyHashTable implements KeyedSet {
         if (table[hashed].contains(value)) {
             return false;
         }
-        if ((double) size / table.length > 1) {
+        loadFactor = (double) size / table.length;
+        if (loadFactor > 1) {
             size = 0;
             rehash();
         }
@@ -201,7 +203,6 @@ public class MyHashTable implements KeyedSet {
      */
     @SuppressWarnings("unchecked")
     private void rehash() {
-        double loadFactor = (double) size / table.length;
         statsLog += String.format("Before rehash # %d: load factor %.2f, %s collision(s).\n",
                 rehashCount + 1, loadFactor, collisionCount);
 
