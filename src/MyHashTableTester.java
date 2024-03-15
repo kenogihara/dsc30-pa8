@@ -88,7 +88,15 @@ class MyHashTableTester {
         for (String name : names) {
             employees.insert(name);
         }
-        System.out.println(Arrays.toString(employees.returnAll()));
+        assertArrayEquals(new String[] {"ken", "noah", "aria", "andrew", "nacho", "arthur", "ricky", "annie", "dom"},
+        (employees.returnAll()));
+        employees.insert("harshil");
+        //System.out.println(Arrays.toString(employees.returnAll()));
+        assertArrayEquals(new String[] {"ken", "noah", "aria", "andrew", "harshil", "nacho",
+                        "arthur", "ricky", "annie", "dom"},
+                (employees.returnAll()));
+        countries.insert("United States of America");
+        assertArrayEquals(new String[] {"United States of America"}, countries.returnAll());
     }
 
     @org.junit.jupiter.api.Test
@@ -126,7 +134,7 @@ class MyHashTableTester {
 
     @org.junit.jupiter.api.Test
     void getStatsLog() {
-        System.out.println(employees.getStatsLog());
+        System.out.println();
     }
 
     @org.junit.jupiter.api.Test

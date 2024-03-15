@@ -48,8 +48,7 @@ public class MyHashTable implements KeyedSet {
         if (table[hashed].contains(value)) {
             return false;
         }
-        double loadFactor = (double) size / table.length;
-        if (loadFactor > 1) {
+        if ((double) size / table.length > 1) {
             size = 0;
             rehash();
         }
