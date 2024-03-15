@@ -53,24 +53,50 @@ public class SpellChecker {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
             for (char character = 'a'; character <= 'z'; character++) {
-
+                if (word.charAt(i) == character) {
+                    continue;
+                }
+                String suggestion = word.substring(0, i) + character + word.substring(i);
+                if (dictWords.lookup(suggestion)) {
+                    suggestions.add(suggestion);
+                }
             }
         }
+        return suggestions;
     }
 
     private LinkedList<String> checkDeleted(String word) {
-        // TODO
-        return null;
+        LinkedList<String> suggestions = new LinkedList<>();
+        for (int i = 0; i < word.length(); i++) {
+            String suggestion = word.substring(0, i) + word.substring(i+1);
+            if (dictWords.lookup(suggestion)) {
+                suggestions.add(suggestion);
+            }
+        }
+        return suggestions;
     }
 
     private LinkedList<String> checkTransposedLetter(String word) {
-        // TODO
-        return null;
+        LinkedList<String> suggestions = new LinkedList<>();
+        for (int i = 0; i < word.length() - 1; i++) {
+            char[] characters = word.toCharArray();
+            char temp = characters[i];
+            characters[i] = characters[i+1];
+            characters[i+1] = temp;
+            String suggestion = characters.toString();
+            if (dictWords.lookup(suggestion)) {
+                suggestions.add(suggestion);
+            }
+        }
+        return suggestions;
+        // "ryan" "yran"
     }
 
     private LinkedList<String> checkInsertSpace(String word) {
-        // TODO
-        return null;
+        LinkedList<String> suggestions = new LinkedList<>();
+        for (int i = 0; i < word.length(); i++) {
+
+        }
     }
 
     private String[] checkWord(String word) {
