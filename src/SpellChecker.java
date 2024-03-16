@@ -84,7 +84,7 @@ public class SpellChecker {
             char temp = characters[i];
             characters[i] = characters[i+1];
             characters[i+1] = temp;
-            String suggestion = characters.toString();
+            String suggestion = String.valueOf(characters);
             if (dictWords.lookup(suggestion)) {
                 suggestions.add(suggestion);
             }
