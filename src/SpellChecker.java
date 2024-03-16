@@ -5,6 +5,7 @@
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -162,10 +163,11 @@ public class SpellChecker {
         }
         allSuggestions.addAll(checkWrongLetter(word));
         allSuggestions.addAll(checkInsertedLetter(word));
-        allSuggestions.addAll(checkInsertSpace(word));
-        allSuggestions.addAll(checkTransposedLetter(word));
         allSuggestions.addAll(checkDeleted(word));
+        allSuggestions.addAll(checkTransposedLetter(word));
+        allSuggestions.addAll(checkInsertSpace(word));
 
+        Collections.sort(allSuggestions);
         if (allSuggestions.isEmpty()) {
             return new String[]{output + "not found"};
         }
