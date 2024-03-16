@@ -186,7 +186,6 @@ public class SpellChecker {
 
         SpellChecker checker = new SpellChecker();
 
-//        args = new String[]{"0", "./src/Samples/tiny.dict.txt", "./src/Samples/Input1.txt"};
         File dictionary = new File(args[1]);
         try {
             Reader reader = new FileReader(dictionary);
