@@ -103,10 +103,10 @@ public class SpellChecker {
     private LinkedList<String> checkInsertSpace(String word) {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
-            String suggestionBeforeSpace = word;
-            String suggestionAfterSpace = " " + word.substring(i);
+            String suggestionBeforeSpace = word.substring(0, i);
+            String suggestionAfterSpace = word.substring(i);
             if (dictWords.lookup(suggestionBeforeSpace) && dictWords.lookup(suggestionAfterSpace)) {
-                suggestions.add(suggestionBeforeSpace + suggestionAfterSpace);
+                suggestions.add(suggestionBeforeSpace + " " + suggestionAfterSpace);
             }
         }
         return suggestions;
@@ -115,6 +115,9 @@ public class SpellChecker {
     private String[] checkWord(String word) {
         LinkedList<String> allSuggestions = new LinkedList<>();
         String output = "";
+        if (dictWords.lookup(word)) {
+            return new String[]{"ok"};
+        }
         allSuggestions.addAll(checkWrongLetter(word));
         allSuggestions.addAll(checkInsertedLetter(word));
         allSuggestions.addAll(checkInsertSpace(word));
@@ -123,9 +126,6 @@ public class SpellChecker {
 
         if (allSuggestions.isEmpty()) {
             return new String[]{output + "not found"};
-        }
-        if (dictWords.lookup(word)) {
-            return new String[]{"ok"};
         }
         else {
             return allSuggestions.toArray(new String[0]);
@@ -139,6 +139,7 @@ public class SpellChecker {
 
         SpellChecker checker = new SpellChecker();
 
+//        args = new String[]{"0", "./src/Samples/tiny.dict.txt", "./src/Samples/Input1.txt"};
         File dictionary = new File(args[1]);
         try {
             Reader reader = new FileReader(dictionary);
@@ -157,6 +158,7 @@ public class SpellChecker {
             while (input.hasNextLine()) {
                 String lowerCase = input.nextLine().toLowerCase();
                 String checked = Arrays.toString(checker.checkWord(lowerCase));
+                System.out.println(lowerCase + ": " + checked.substring(1, checked.length() - 1));
             }
 
         } catch (FileNotFoundException e) {
