@@ -19,6 +19,13 @@ public class SpellChecker {
 
     public KeyedSet dictWords;
 
+
+    /**
+     * Method that accepts a Reader object and scans through it using a Java Scanner.
+     *
+     * @param reader
+     * @param useHashTable
+     */
     public void readDictionary(Reader reader, boolean useHashTable) {
         Scanner fetch = new Scanner(reader);
         if (useHashTable) {
@@ -96,7 +103,7 @@ public class SpellChecker {
     private LinkedList<String> checkInsertSpace(String word) {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
-            String suggestionBeforeSpace = word.substring(0);
+            String suggestionBeforeSpace = word;
             String suggestionAfterSpace = " " + word.substring(i);
             if (dictWords.lookup(suggestionBeforeSpace) && dictWords.lookup(suggestionAfterSpace)) {
                 suggestions.add(suggestionBeforeSpace + suggestionAfterSpace);
