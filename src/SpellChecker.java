@@ -206,7 +206,7 @@ public class SpellChecker {
                 for (String suggestion : checked) {
                     result.append(suggestion).append(", ");
                 }
-                String output = !result.isEmpty() ? result.substring(0, result.length() - 2) : "not found";
+                String output = result.substring(0, result.length() - 2);
                 System.out.println(lowerCase + ": " + output);
             }
 
