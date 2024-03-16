@@ -23,8 +23,9 @@ public class SpellChecker {
     /**
      * Method that accepts a Reader object and scans through it using a Java Scanner.
      *
-     * @param reader
-     * @param useHashTable
+     * @param reader file that we are scanning.
+     * @param useHashTable whether or not we will use an object of the MyHashTable or an object
+     * of the MyBloomFilter class.
      */
     public void readDictionary(Reader reader, boolean useHashTable) {
         Scanner fetch = new Scanner(reader);
@@ -40,6 +41,13 @@ public class SpellChecker {
         fetch.close();
     }
 
+    /**
+     * Returns a list of Strings where if you change one letter in the given String you can find a
+     * match.
+     *
+     * @param word String item that we will be manipulating.
+     * @return a list of strings that contain the suggestions for the given string.
+     */
     private LinkedList<String> checkWrongLetter(String word) {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
@@ -57,6 +65,13 @@ public class SpellChecker {
         return suggestions;
     }
 
+    /**
+     * Returns a list of strings where if you add one letter in the given string you can find a
+     * match.
+     *
+     * @param word String item that we will be manipulating.
+     * @return a list of strings that contain the suggestions for the given string.
+     */
     private LinkedList<String> checkInsertedLetter(String word) {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
@@ -73,6 +88,13 @@ public class SpellChecker {
         return suggestions;
     }
 
+    /**
+     * Returns a list of Strings where if you delete one letter in the given string you can find a
+     * match.
+     *
+     * @param word String item that we will be manipulating.
+     * @return a list of strings that contain the suggestions for the given string.
+     */
     private LinkedList<String> checkDeleted(String word) {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
@@ -84,6 +106,13 @@ public class SpellChecker {
         return suggestions;
     }
 
+    /**
+     * Returns a list of strings where if you swap two adjacent letters in the given string item
+     * you can find a match.
+     *
+     * @param word String item that we will be manipulating.
+     * @return a list of strings that contain the suggestions for the given string.
+     */
     private LinkedList<String> checkTransposedLetter(String word) {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length() - 1; i++) {
@@ -100,6 +129,13 @@ public class SpellChecker {
         // "ryan" "yran"
     }
 
+    /**
+     * Returns a list of strings where if you insert a space in the given string you can find a
+     * match with both of the newly generated words.
+     *
+     * @param word String item that we will be manipulating.
+     * @return a list of strings that contain the suggestions for the given string.
+     */
     private LinkedList<String> checkInsertSpace(String word) {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
@@ -112,6 +148,12 @@ public class SpellChecker {
         return suggestions;
     }
 
+    /**
+     * Returns an array of potential correct words by using the methods above.
+     *
+     * @param word String item that will be checked.
+     * @return a list of strings that contain the suggestions for the given string.
+     */
     private String[] checkWord(String word) {
         LinkedList<String> allSuggestions = new LinkedList<>();
         String output = "";
