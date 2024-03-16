@@ -4,10 +4,7 @@
  */
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Spell Checker Implementation.
@@ -153,7 +150,7 @@ public class SpellChecker {
      * @return a list of strings that contain the suggestions for the given string.
      */
     private String[] checkWord(String word) {
-        LinkedList<String> allSuggestions = new LinkedList<>();
+        Set<String> allSuggestions = new HashSet<>();
         String output = "";
         if (dictWords.lookup(word)) {
             return new String[]{"ok"};
@@ -164,12 +161,13 @@ public class SpellChecker {
         allSuggestions.addAll(checkTransposedLetter(word));
         allSuggestions.addAll(checkInsertSpace(word));
 
-        Collections.sort(allSuggestions);
+        String[] set = allSuggestions.toArray(new String[0]);
+        Arrays.sort(set);
         if (allSuggestions.isEmpty()) {
             return new String[]{output + "not found"};
         }
         else {
-            return allSuggestions.toArray(new String[0]);
+            return set;
         }
     }
 
