@@ -77,9 +77,6 @@ public class SpellChecker {
         LinkedList<String> suggestions = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
             for (char character = 'a'; character <= 'z'; character++) {
-                if (word.charAt(i) == character) {
-                    continue;
-                }
                 String suggestion = word.substring(0, i) + character + word.substring(i);
                 if (dictWords.lookup(suggestion)) {
                     suggestions.add(suggestion);
