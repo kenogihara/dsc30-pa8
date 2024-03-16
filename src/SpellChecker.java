@@ -201,7 +201,13 @@ public class SpellChecker {
 
             while (input.hasNext()) {
                 String lowerCase = input.nextLine().toLowerCase();
-                String checked = Arrays.toString(checker.checkWord(lowerCase));
+                String[] checked = checker.checkWord(lowerCase);
+                StringBuilder result = new StringBuilder();
+                for (String suggestion : checked) {
+                    result.append(suggestion).append(", ");
+                }
+                String output = !result.isEmpty() ? result.substring(0, result.length() - 2) : "not found";
+                System.out.println(lowerCase + ": " + output);
             }
 
         } catch (FileNotFoundException e) {
