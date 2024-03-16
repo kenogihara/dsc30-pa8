@@ -174,6 +174,12 @@ public class SpellChecker {
         }
     }
 
+    /**
+     * Main method that reads files and checks for potential correct words.
+     *
+     * @param args a list of strings where the first index is a boolean, second is the path to the
+     *             dictionary file, and the third index is the path to the input file.
+     */
     public static void main(String[] args) {
         // args[0]: 0 if we should use a MyHashTable and 1 for a MyBloomFilter
         // args[1]: path to dict file
