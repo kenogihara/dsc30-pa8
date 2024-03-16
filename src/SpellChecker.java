@@ -34,7 +34,7 @@ public class SpellChecker {
         else {
             dictWords = new MyBloomFilter();
         }
-        while (fetch.hasNextLine()) {
+        while (fetch.hasNext()) {
             dictWords.insert(fetch.nextLine());
         }
         fetch.close();
@@ -155,7 +155,7 @@ public class SpellChecker {
         try {
             Scanner input = new Scanner(inputFile); // Reads list of words
 
-            while (input.hasNextLine()) {
+            while (input.hasNext()) {
                 String lowerCase = input.nextLine().toLowerCase();
                 String checked = Arrays.toString(checker.checkWord(lowerCase));
                 System.out.println(lowerCase + ": " + checked.substring(1, checked.length() - 1));
