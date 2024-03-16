@@ -164,7 +164,7 @@ public class SpellChecker {
         allSuggestions.addAll(checkTransposedLetter(word));
         allSuggestions.addAll(checkInsertSpace(word));
 
-        //Collections.sort(allSuggestions);
+        Collections.sort(allSuggestions);
         if (allSuggestions.isEmpty()) {
             return new String[]{output + "not found"};
         }
